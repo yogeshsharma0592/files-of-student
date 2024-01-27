@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File Management System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+    th, td {
+      padding: 12px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    input, button {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>File Management System</h1>
+
+  <h2>Add File</h2>
+  <label for="name">Name:</label>
+  <input type="text" id="name" placeholder="Enter name">
+
+  <label for="class">Class:</label>
+  <input type="text" id="class" placeholder="Enter class">
+
+  <label for="rollNumber">Roll Number:</label>
+  <input type="text" id="rollNumber" placeholder="Enter roll number">
+
+  <label for="marks">Marks:</label>
+  <input type="text" id="marks" placeholder="Enter marks">
+
+  <button onclick="addFile()">Add File</button>
+
+  <h2>Search File</h2>
+  <label for="searchName">Search by Name:</label>
+  <input type="text" id="searchName" placeholder="Enter name">
+
+  <button onclick="searchFile()">Search</button>
+
+  <h2>File List</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Class</th>
+        <th>Roll Number</th>
+        <th>Marks</th>
+      </tr>
+    </thead>
+    <tbody id="fileList">
+      <!-- File list will be displayed here -->
+    </tbody>
+  </table>
+
+  <script>
+    let files = [];
+
+    function addFile() {
+      const name = document.getElementById('name').value;
+      const className = document.getElementById('class').value;
+      const rollNumber = document.getElementById('rollNumber').value;
+      const marks = document.getElementById('marks').value;
+
+      files.push({ name, class: className, rollNumber, marks });
+
+      displayFiles();
+      clearInputFields();
+    }
+
+    function searchFile() {
+      const searchName = document.getElementById('searchName').value.toLowerCase();
+      const result = files.filter(file => file.name.toLowerCase().includes(searchName));
+      displayFiles(result);
+    }
+
+    function displayFiles(filesToDisplay = files) {
+      const fileListElement = document.getElementById('fileList');
+      fileListElement.innerHTML = '';
+
+      filesToDisplay.forEach(file => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${file.name}</td>
+          <td>${file.class}</td>
+          <td>${file.rollNumber}</td>
+          <td>${file.marks}</td>
+        `;
+        fileListElement.appendChild(row);
+      });
+    }
+
+    function clearInputFields() {
+      document.getElementById('name').value = '';
+      document.getElementById('class').value = '';
+      document.getElementById('rollNumber').value = '';
+      document.getElementById('marks').value = '';
+    }
+  </script>
+
+</body>
+</html>
